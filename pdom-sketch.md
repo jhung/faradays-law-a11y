@@ -2,71 +2,71 @@
 
 ## Alerts
 
-Cursor key move in new direction:
-* "Moving magnet 1 step `[left / right / up / down]`."
+Movement Alert: Cursor key move in new direction
+* "Moving `[left / right / up / down]` 1 step."
+* "Moving `[left / right / up / down]` 1 large step." (_if CTRL modifier pressed_)
+* "Moving `[left / right / up / down]` 1 small step." (_if Shift modifier pressed_)
 
-Cursor key move in the same direction as before:
-* 1st and 2nd step:
-    * "Moving magnet 1 step."
-* 3rd step:
-    * "Moving magnet 1 step. At `[location]` of play area."
+Movement Alert: Cursor key move in the same direction as before
+* "Moving 1 step."
+* "Moving 1 large step." (_if CTRL modifier pressed_)
+* "Moving 1 small step." (_if Shift modifier pressed_)
+* **Remark:** This is a lower priority alert. If one of the other alerts / events occur it may not be necessary to give this movement alert.
+
+Jump start alert:
+* "Jumping magnet slowly to `[left / right]` side of play area. Press Space to stop." (_1 key pressed_)
+* "Jumping magnet to `[left / right]` side of play area. Press Space to stop." (_2 key pressed_)
+* "Jumping magnet quickly to `[left / right]` side of play area. Press Space to stop." (_3 key pressed_)
+
+Jump stop alert:
+* "Magnet stopped at `[location]` of play area. `[coil proximity]` 4-loop coil. `[coil proximity]` 2-loop coil (_only if 2-loop coil is enabled_)."
+
+Jumping in progress:
+* "Jumping to `[left / right]`."
+
+Location change event:
+* "At `[location]` of play area."
 * `location` values:
-     * `top-left` / `top-center` / `top-right`
-     * `middle-left` / `middle-right`
+     * `top-left`
+     * `top-center`
+     * `top-right`
+     * `middle-left`
+     * `middle-right`
      * `center`
-     * `bottom-left` / `bottom-center` / `bottom-right`
-* **Remark 1:** the intention is to periodically give a slightly more detailed description to give sense of progress and orient the player.
-* **Remark 2:** BASE does something like this and Faraday should follow a similar strategy.
+     * `bottom-left`
+     * `bottom-center`
+     * `bottom-right`
 
-Movement keys + CTRL:
-* "Moving magnet 1 large step..."
+Coil proximity change event:
+* "`[coil proximity]` 4-loop coil."
+* "`[coil proximity]` 2-loop coil." (_only if 2-loop coil is enabled_)
+* `coil proximity` values:
+    * `Far away from`
+    * `Close to`
+    * `Very close to`
+    * `In`
 
-Movement keys + Shift:
-* "Moving magnet 1 small step..."
-
-Movement with region transition:
-* "`[Movement alert text from above]`. At `[location]` of play area."
-* `location` values:
-     * `top-left` / `top-center` / `top-right`
-     * `middle-left` / `middle-right`
-     * `center`
-     * `bottom-left` / `bottom-center` / `bottom-right`
-
-Initiating jumping magnet:
-* "Jumping magnet quickly to `[left / right]` side of play area."
-* "Jumping magnet slowly to `[left / right]` side of play area."
-* "Jumping magnet to `[left / right]` side of play area."
-
-Region transition while jumping in progress:
-* "Jumping to `[left / right]`. At `[location]` of play area."
-* `location` values:
-     * `top-left` / `top-center` / `top-right`
-     * `middle-left` / `middle-right`
-     * `center`
-     * `bottom-left` / `bottom-center` / `bottom-right`
-* **Remark:** It may be necessary to provide additional text alerts for slow jumping and in edge areas where sonification may not occur. User testing may reveal what approach to take.
+**Remarks:**
+* Movement, coil proximity and location change alerts may be sufficient to give sense of progress in most cases.
+* For blank steps, it may be appropriate to periodically give a location or coil proximity change event, or a movement alert.
+* For quick moments, multiple alerts may occur within a small window. It may be necessary to prioritize alerts to report.
 
 ## Polite Alerts
 
 Volt meter:
-* `Connecting / removing] volt meter to circuit`
-* `Removing volt meter to circuit`
+* "`[Connecting / removing]` volt meter to circuit"
 
 Magnetic field add/remove:
-* `Showing magnetic field lines.`
-* `Hiding magnetic field lines.`
+* "`[Showing / hiding]` magnetic field lines."
 
 2 loop coil add/remove:
-* `Adding 2 loop coil to circuit.`
-* `Removing 2 loop coil from circuit.`
+* "`[Adding / removing]` 2 loop coil `[to / from]` circuit."
 
 Flipping magnet:
-* `Flipping magnet: South pole is now on left. North pole now on right.`
-* `Flipping magnet: North pole is now on left. South pole is now on right.`
+* "Flipping magnet: North pole is now on `[left / right]`. South pole now on `[right / left]`."
 
 Flipping magnet with field lines visible:
-* `Flipping magnet and its magnetic field: South pole is now on left. North pole now on right.`
-* `Flipping magnet and its magnetic field: North pole is now on left. South pole is now on right.`
+* "Flipping magnet and its magnetic field: North pole is now on `[left / right]`. South pole now on `[right / left]`."
 
 ## Scene Summary
 
@@ -74,7 +74,7 @@ Flipping magnet with field lines visible:
 
 * Currently, the a circuit consists of a lightbulb, `a volt meter`, `2 loop coil`, and a 4 loop coil. These parts are connected together with wires to form the circuit.
 
-* The magnet is at the `middle-right side` of the Play Area. The magnet has two magnetic poles: North on the `left`, South on the `right`.
+* The magnet is at the `[location]` of the Play Area. The magnet has two magnetic poles: North on the `[left / right]`, South on the `[right / left]`.
 
 * Move the magnet to play.
 
@@ -101,11 +101,15 @@ The circuit consists of a lightbulb, `a volt meter`, `2 loop coil`, and a 4 loop
 
 ### Magnet
 
-The magnet is at the `middle-right side` of the Play Area.
-The North pole is on the `left`, South pole is on the `right`.
+The magnet is at the `[location]` of the Play Area.
+The North pole is on the `[left / right]`, South pole is on the `[right / left]`.
+
+Use the arrow keys to move the magnet. Also use CTRL or Shift keys with arrow keys to move magnet in large or small steps.
+
+Use number keys 1, 2, or 3 jump magnet to other side of the play area.
 
 **Remark:** _The description of the magnetic field below gets reported as an update (aria live region?). -jh_
 
-* `The magnetic field lines are going from North pole on left end, to South pole on right end of magnet.`
+* "The magnetic field lines are going from North pole on `[left / right]` end, to South pole on `[right / left]` end of magnet."
 
 **Button**: flip magnet
