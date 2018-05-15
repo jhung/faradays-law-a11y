@@ -2,30 +2,51 @@
 
 ## Alerts
 
-Movement Alert: Cursor key move in new direction
-* "Moving `[left / right / up / down]` 1 step."
-* "Moving `[left / right / up / down]` 1 large step." (_if CTRL modifier pressed_)
-* "Moving `[left / right / up / down]` 1 small step." (_if Shift modifier pressed_)
+Movement Alert: Cursor key move in new direction, or step size change
+* _"`[step direction]` 1 `[step size]` step."_
+* `step direction` values:
+    * left
+    * right
+    * up
+    * down
+* `step size` values:
+    * `regular` (default)
+    * `large` (_if CTRL modifier pressed_)
+    * `small` (_if Shift modifier pressed_)
+* Alert Frequency:
+    * on movement direction change
+    * when a step is made using a different step size than before.
 
 Movement Alert: Cursor key move in the same direction as before
-* "Moving 1 step."
-* "Moving 1 large step." (_if CTRL modifier pressed_)
-* "Moving 1 small step." (_if Shift modifier pressed_)
-* **Remark:** This is a lower priority alert. If one of the other alerts / events occur it may not be necessary to give this movement alert.
+* _"`[step direction]`"_
+* Alert Frequency:
+    * This is a lower priority alert. If one of the other alerts / events has occurred it is not be necessary to give this movement alert.
 
 Jump start alert:
-* "Jumping magnet slowly to `[left / right]` side of play area. Press Space to stop." (_1 key pressed_)
-* "Jumping magnet to `[left / right]` side of play area. Press Space to stop." (_2 key pressed_)
-* "Jumping magnet quickly to `[left / right]` side of play area. Press Space to stop." (_3 key pressed_)
+* _"Jumping magnet `[jump speed]` to `[jump direction]` side of play area. Press Space to stop jump."_
+* `[jump speed]` values:
+    * `slowly` (_1 key pressed_)
+    * `normally` (_2 key pressed_)
+    * `quickly` (_3 key pressed_)
+* `[jump direction]` values:
+    * `left`
+    * `right`
+* Alert Frequency:
+    * 
+* **Remark:** the word "jump" seems appropriate because:
+    1. it is a friendly term
+    2. approximately describes the motion
+    3. conceptually distinct from the other magnet movement term "Moving"
 
 Jump stop alert:
 * "Magnet stopped at `[location]` of play area. `[coil proximity]` 4-loop coil. `[coil proximity]` 2-loop coil (_only if 2-loop coil is enabled_)."
 
 Jumping in progress:
 * "Jumping to `[left / right]`."
+* Alert Frequency: This alert event occurs periodically.
 
 Location change event:
-* "At `[location]` of play area."
+* "At `[location]`  of play area."
 * `location` values:
      * `top-left`
      * `top-center`
@@ -36,22 +57,35 @@ Location change event:
      * `bottom-left`
      * `bottom-center`
      * `bottom-right`
+     * +`edge` if at edge
+     * +`corner` if at corner
+* Alert Frequency: This alert event occurs only  when the magnet transitions from one location region into another.
 
 Coil proximity change event:
 * "`[coil proximity]` 4-loop coil."
 * "`[coil proximity]` 2-loop coil." (_only if 2-loop coil is enabled_)
 * `coil proximity` values:
-    * `Far away from`
+    * `Far from`
     * `Close to`
     * `Very close to`
     * `In`
+* Alert Frequency: This alert event occurs only when the magnet transitions from one proximity region into another.
+
+Coil proximity change event with magnetic field enabled:
+* "`[coil proximity]` 4-loop coil and `[field strength]` magnetic field passing through."
+* "`[coil proximity]` 2-loop coiland `[field strength]` magnetic field passing through." (_only if 2-loop coil is enabled_)
+* `field strength` values:
+    * `Very strong`
+    * `Strong`
+    * `Weak`
+    * `Very weak`
+    * `Minimal`
+
 
 **Remarks:**
 * Movement, coil proximity and location change alerts may be sufficient to give sense of progress in most cases.
 * For blank steps, it may be appropriate to periodically give a location or coil proximity change event, or a movement alert.
 * For quick moments, multiple alerts may occur within a small window. It may be necessary to prioritize alerts to report.
-
-## Polite Alerts
 
 Volt meter:
 * "`[Connecting / removing]` volt meter to circuit"
@@ -90,26 +124,21 @@ The circuit consists of a lightbulb, `a volt meter`, `2 loop coil`, and a 4 loop
 
 **Remark:** _The description of the magnetic field below gets reported as an update (aria live region?). -jh_
 
-* **Remark 1:** _Coil-then-field description: logical structure, but phrasing is awkward. -jh_
-   * `4 loop coil` has `strong magnetic field` is passing through.
-   * `2 loop coil` has `weak magnetic field` is passing through.
-* **Remark 2:** _Field-then-coil description: structuring less logical, but phrasing is more pleasant. -jh_
-   * `Strong` `magnetic field` is passing through the `4 loop coil`.
-   * `Weak` `magnetic field` is passing through the `2 loop coil`.
+   * "`[field strength]` magnetic field is passing through the 4 loop coil."
+   * "`[field strength]` `magnetic field` is passing through the 2 loop coil."
 
 **Checkbox**: show / hide magnetic field
 
 ### Magnet
 
-The magnet is at the `[location]` of the Play Area.
+The magnet is at the `[location]` of the Play Area. Use the arrow keys to move the magnet. Press H for additional keyboard commands.
+
+The magnet is `[proximity]` to the 4-loop coil (, and is `[proximity]` to the 2-loop coil).
+
 The North pole is on the `[left / right]`, South pole is on the `[right / left]`.
-
-Use the arrow keys to move the magnet. Also use CTRL or Shift keys with arrow keys to move magnet in large or small steps.
-
-Use number keys 1, 2, or 3 jump magnet to other side of the play area.
 
 **Remark:** _The description of the magnetic field below gets reported as an update (aria live region?). -jh_
 
-* "The magnetic field lines are going from North pole on `[left / right]` end, to South pole on `[right / left]` end of magnet."
+* "The magnetic field is going from North pole on `[left / right]` end, to South pole on `[right / left]` end of magnet."
 
 **Button**: flip magnet
